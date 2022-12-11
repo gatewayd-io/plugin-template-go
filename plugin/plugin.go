@@ -3,119 +3,90 @@ package plugin
 import (
 	"context"
 
-	"github.com/davecgh/go-spew/spew"
 	v1 "github.com/gatewayd-io/gatewayd-plugin-test/plugin/v1"
 	goplugin "github.com/hashicorp/go-plugin"
+	"google.golang.org/grpc"
+	"google.golang.org/protobuf/types/known/structpb"
 )
 
-type GDPServiceServerImpl struct {
-	v1.UnimplementedGDPServiceServer
+var PluginID = v1.PluginID{
+	Name:      "gatewayd-plugin-test",
+	Version:   "0.0.1",
+	RemoteUrl: "github.com/gatewayd-io/gatewayd-plugin-test",
 }
 
+var Handshake = goplugin.HandshakeConfig{
+	ProtocolVersion:  1,
+	MagicCookieKey:   "GATEWAYD_PLUGIN",
+	MagicCookieValue: "5712b87aa5d7e9f9e9ab643e6603181c5b796015cb1c09d6f5ada882bf2a1872",
+}
+
+var PluginMap = map[string]goplugin.Plugin{
+	"gatewayd-plugin-test": &TestPlugin{},
+}
+
+type Plugin struct {
+	v1.GatewayDPluginServiceServer
+}
 type TestPlugin struct {
-	goplugin.Plugin
-	Impl GDPServiceServerImpl
+	goplugin.NetRPCUnsupportedPlugin
+	Impl Plugin
 }
 
-var _ v1.GDPServiceServer = &GDPServiceServerImpl{}
-
-func (s *GDPServiceServerImpl) PluginConfig(
-	ctx context.Context, req *v1.PluginConfigRequest) (*v1.PluginConfigResponse, error) {
-	return &v1.PluginConfigResponse{}, nil
+func NewTestPlugin(impl Plugin) *TestPlugin {
+	return &TestPlugin{
+		NetRPCUnsupportedPlugin: goplugin.NetRPCUnsupportedPlugin{},
+		Impl:                    impl,
+	}
 }
 
-func (s *GDPServiceServerImpl) OnConfigLoaded(
-	ctx context.Context, req *v1.OnConfigLoadedRequest) (*v1.OnConfigLoadedResponse, error) {
-	spew.Dump(req.Config)
-	return &v1.OnConfigLoadedResponse{}, nil
+func (p *TestPlugin) GRPCServer(b *goplugin.GRPCBroker, s *grpc.Server) error {
+	v1.RegisterGatewayDPluginServiceServer(s, &p.Impl)
+	return nil
 }
 
-func (s *GDPServiceServerImpl) OnNewLogger(
-	ctx context.Context, req *v1.OnNewLoggerRequest) (*v1.OnNewLoggerResponse, error) {
-	return &v1.OnNewLoggerResponse{}, nil
+func (p *TestPlugin) GRPCClient(ctx context.Context, b *goplugin.GRPCBroker, c *grpc.ClientConn) (interface{}, error) {
+	return v1.NewGatewayDPluginServiceClient(c), nil
 }
 
-func (s *GDPServiceServerImpl) OnNewPool(
-	ctx context.Context, req *v1.OnNewPoolRequest) (*v1.OnNewPoolResponse, error) {
-	return &v1.OnNewPoolResponse{}, nil
+func (p *Plugin) GetPluginConfig(
+	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+	return structpb.NewStruct(map[string]interface{}{
+		"id": map[string]interface{}{
+			"name":      PluginID.Name,
+			"version":   PluginID.Version,
+			"remoteUrl": PluginID.RemoteUrl,
+		},
+		"description": "Test plugin",
+		"authors": []interface{}{
+			"Mostafa Moradian <mstfmoradian@gmail.com>",
+		},
+		"license":    "Apache-2.0",
+		"projectUrl": "https://github.com/gatewayd-io/gatewayd-plugin-test",
+		"config": map[string]interface{}{
+			"key": "value",
+		},
+		// TODO: Use enum/constant for hooks
+		"hooks":      []interface{}{"onConfigLoaded", "onPluginConfigLoaded"},
+		"tags":       []interface{}{"test", "plugin"},
+		"categories": []interface{}{"test"},
+	})
 }
 
-func (s *GDPServiceServerImpl) OnNewProxy(
-	ctx context.Context, req *v1.OnNewProxyRequest) (*v1.OnNewProxyResponse, error) {
-	return &v1.OnNewProxyResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnNewServer(
-	ctx context.Context, req *v1.OnNewServerRequest) (*v1.OnNewServerResponse, error) {
-	return &v1.OnNewServerResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnSignal(
-	ctx context.Context, req *v1.OnSignalRequest) (*v1.OnSignalResponse, error) {
-	return &v1.OnSignalResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnRun(
-	ctx context.Context, req *v1.OnRunRequest) (*v1.OnRunResponse, error) {
-	return &v1.OnRunResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnBooting(
-	ctx context.Context, req *v1.OnBootingRequest) (*v1.OnBootingResponse, error) {
-	return &v1.OnBootingResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnBooted(
-	ctx context.Context, req *v1.OnBootedRequest) (*v1.OnBootedResponse, error) {
-	return &v1.OnBootedResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnOpening(
-	ctx context.Context, req *v1.OnOpeningRequest) (*v1.OnOpeningResponse, error) {
-	return &v1.OnOpeningResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnOpened(
-	ctx context.Context, req *v1.OnOpenedRequest) (*v1.OnOpenedResponse, error) {
-	return &v1.OnOpenedResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnClosing(
-	ctx context.Context, req *v1.OnClosingRequest) (*v1.OnClosingResponse, error) {
-	return &v1.OnClosingResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnClosed(
-	ctx context.Context, req *v1.OnClosedRequest) (*v1.OnClosedResponse, error) {
-	return &v1.OnClosedResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnTraffic(
-	ctx context.Context, req *v1.OnTrafficRequest) (*v1.OnTrafficResponse, error) {
-	return &v1.OnTrafficResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnIngressTraffic(
-	ctx context.Context, req *v1.OnIngressTrafficRequest) (*v1.OnIngressTrafficResponse, error) {
-	return &v1.OnIngressTrafficResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnEgressTraffic(
-	ctx context.Context, req *v1.OnEgressTrafficRequest) (*v1.OnEgressTrafficResponse, error) {
-	return &v1.OnEgressTrafficResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnShutdown(
-	ctx context.Context, req *v1.OnShutdownRequest) (*v1.OnShutdownResponse, error) {
-	return &v1.OnShutdownResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnTick(
-	ctx context.Context, req *v1.OnTickRequest) (*v1.OnTickResponse, error) {
-	return &v1.OnTickResponse{}, nil
-}
-
-func (s *GDPServiceServerImpl) OnNewClient(
-	ctx context.Context, req *v1.OnNewClientRequest) (*v1.OnNewClientResponse, error) {
-	return &v1.OnNewClientResponse{}, nil
+func (p *Plugin) OnConfigLoaded(
+	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+	if req.Fields == nil {
+		req.Fields = make(map[string]*structpb.Value)
+	}
+	req.Fields["loggers.logger.level"] = &structpb.Value{
+		Kind: &structpb.Value_StringValue{
+			StringValue: "debug",
+		},
+	}
+	req.Fields["loggers.logger.noColor"] = &structpb.Value{
+		Kind: &structpb.Value_BoolValue{
+			BoolValue: false,
+		},
+	}
+	return req, nil
 }
