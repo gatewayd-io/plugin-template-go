@@ -3,13 +3,13 @@ package plugin
 import (
 	"context"
 
-	v1 "github.com/gatewayd-io/gatewayd-plugin-test/plugin/v1"
+	plugin_v1 "github.com/gatewayd-io/gatewayd-plugin-test/plugin/v1"
 	goplugin "github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/structpb"
 )
 
-var PluginID = v1.PluginID{
+var PluginID = plugin_v1.PluginID{
 	Name:      "gatewayd-plugin-test",
 	Version:   "0.0.1",
 	RemoteUrl: "github.com/gatewayd-io/gatewayd-plugin-test",
@@ -20,8 +20,10 @@ var PluginMap = map[string]goplugin.Plugin{
 }
 
 type Plugin struct {
-	v1.GatewayDPluginServiceServer
+	goplugin.GRPCPlugin
+	plugin_v1.GatewayDPluginServiceServer
 }
+
 type TestPlugin struct {
 	goplugin.NetRPCUnsupportedPlugin
 	Impl Plugin
@@ -35,12 +37,12 @@ func NewTestPlugin(impl Plugin) *TestPlugin {
 }
 
 func (p *TestPlugin) GRPCServer(b *goplugin.GRPCBroker, s *grpc.Server) error {
-	v1.RegisterGatewayDPluginServiceServer(s, &p.Impl)
+	plugin_v1.RegisterGatewayDPluginServiceServer(s, &p.Impl)
 	return nil
 }
 
 func (p *TestPlugin) GRPCClient(ctx context.Context, b *goplugin.GRPCBroker, c *grpc.ClientConn) (interface{}, error) {
-	return v1.NewGatewayDPluginServiceClient(c), nil
+	return plugin_v1.NewGatewayDPluginServiceClient(c), nil
 }
 
 func (p *Plugin) GetPluginConfig(
