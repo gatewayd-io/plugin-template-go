@@ -1,2 +1,3 @@
 # gatewayd-plugin-test
-An example plugin for GatewayD
+
+A test plugin for GatewayD
