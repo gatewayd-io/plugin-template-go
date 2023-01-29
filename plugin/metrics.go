@@ -48,8 +48,10 @@ func ExposeMetrics(metricsConfig MetricsConfig, logger hclog.Logger) {
 		"unixDomainSocket", metricsConfig.UnixDomainSocket,
 		"endpoint", metricsConfig.Endpoint)
 
-	if err := os.Remove(metricsConfig.UnixDomainSocket); err != nil {
-		logger.Error("Failed to remove unix domain socket")
+	if file, err := os.Stat(metricsConfig.UnixDomainSocket); err == nil && !file.IsDir() && file.Mode().Type() == os.ModeSocket {
+		if err := os.Remove(metricsConfig.UnixDomainSocket); err != nil {
+			logger.Error("Failed to remove unix domain socket")
+		}
 	}
 
 	listener, err := net.Listen("unix", metricsConfig.UnixDomainSocket)
