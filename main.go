@@ -5,6 +5,8 @@ import (
 	"os"
 	"strconv"
 
+	sdkConfig "github.com/gatewayd-io/gatewayd-plugin-sdk/config"
+	"github.com/gatewayd-io/gatewayd-plugin-sdk/logging"
 	"github.com/gatewayd-io/gatewayd-plugin-test/plugin"
 	"github.com/hashicorp/go-hclog"
 	goplugin "github.com/hashicorp/go-plugin"
@@ -17,7 +19,7 @@ func main() {
 	flag.Parse()
 
 	logger := hclog.New(&hclog.LoggerOptions{
-		Level:      plugin.GetLogLevel(*logLevel),
+		Level:      logging.GetLogLevel(*logLevel),
 		Output:     os.Stderr,
 		JSONFormat: true,
 		Color:      hclog.ColorOff,
@@ -41,8 +43,8 @@ func main() {
 	goplugin.Serve(&goplugin.ServeConfig{
 		HandshakeConfig: goplugin.HandshakeConfig{
 			ProtocolVersion:  1,
-			MagicCookieKey:   plugin.GetEnv("MAGIC_COOKIE_KEY", ""),
-			MagicCookieValue: plugin.GetEnv("MAGIC_COOKIE_VALUE", ""),
+			MagicCookieKey:   sdkConfig.GetEnv("MAGIC_COOKIE_KEY", ""),
+			MagicCookieValue: sdkConfig.GetEnv("MAGIC_COOKIE_VALUE", ""),
 		},
 		Plugins: goplugin.PluginSet{
 			"gateway-plugin-test": pluginInstance,
