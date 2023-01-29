@@ -11,15 +11,49 @@ import (
 	"google.golang.org/protobuf/types/known/structpb"
 )
 
-var PluginID = pluginV1.PluginID{
-	Name:      "gatewayd-plugin-test",
-	Version:   "0.0.1",
-	RemoteUrl: "github.com/gatewayd-io/gatewayd-plugin-test",
-}
-
-var PluginMap = map[string]goplugin.Plugin{
-	"gatewayd-plugin-test": &TestPlugin{},
-}
+var (
+	PluginID = pluginV1.PluginID{
+		Name:      "gatewayd-plugin-test",
+		Version:   "0.0.1",
+		RemoteUrl: "github.com/gatewayd-io/gatewayd-plugin-test",
+	}
+	PluginMap = map[string]goplugin.Plugin{
+		"gatewayd-plugin-test": &TestPlugin{},
+	}
+	Config = map[string]interface{}{
+		"id": map[string]interface{}{
+			"name":      PluginID.Name,
+			"version":   PluginID.Version,
+			"remoteUrl": PluginID.RemoteUrl,
+		},
+		"description": "Test plugin",
+		"authors": []interface{}{
+			"Mostafa Moradian <mstfmoradian@gmail.com>",
+		},
+		"license":    "Apache-2.0",
+		"projectUrl": "https://github.com/gatewayd-io/gatewayd-plugin-test",
+		"config": map[string]interface{}{
+			"socketPath":  "/tmp/gatewayd-plugin-test.sock",
+			"metricsPath": "/metrics",
+		},
+		// "requires": []interface{}{
+		// 	map[string]interface{}{
+		// 		"name":      "gatewayd-plugin-non-existing",
+		// 		"version":   "0.0.1",
+		// 		"remoteUrl": "github.com/gatewayd-io/gatewayd-plugin-non-existing",
+		// 	},
+		// },
+		// TODO: Use enum/constant for hooks
+		"hooks": []interface{}{
+			"onConfigLoaded",
+			"onPluginConfigLoaded", // This leads to an error and will be ignored
+			"onTrafficFromClient",
+			"onTrafficFromServer",
+		},
+		"tags":       []interface{}{"test", "plugin"},
+		"categories": []interface{}{"test"},
+	}
+)
 
 type Plugin struct {
 	goplugin.GRPCPlugin
@@ -54,38 +88,7 @@ func (p *TestPlugin) GRPCClient(ctx context.Context, b *goplugin.GRPCBroker, c *
 // GetPluginConfig returns the plugin config.
 func (p *Plugin) GetPluginConfig(
 	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
-	return structpb.NewStruct(map[string]interface{}{
-		"id": map[string]interface{}{
-			"name":      PluginID.Name,
-			"version":   PluginID.Version,
-			"remoteUrl": PluginID.RemoteUrl,
-		},
-		"description": "Test plugin",
-		"authors": []interface{}{
-			"Mostafa Moradian <mstfmoradian@gmail.com>",
-		},
-		"license":    "Apache-2.0",
-		"projectUrl": "https://github.com/gatewayd-io/gatewayd-plugin-test",
-		"config": map[string]interface{}{
-			"key": "value",
-		},
-		// "requires": []interface{}{
-		// 	map[string]interface{}{
-		// 		"name":      "gatewayd-plugin-non-existing",
-		// 		"version":   "0.0.1",
-		// 		"remoteUrl": "github.com/gatewayd-io/gatewayd-plugin-non-existing",
-		// 	},
-		// },
-		// TODO: Use enum/constant for hooks
-		"hooks": []interface{}{
-			"onConfigLoaded",
-			"onPluginConfigLoaded", // This leads to an error and will be ignored
-			"onTrafficFromClient",
-			"onTrafficFromServer",
-		},
-		"tags":       []interface{}{"test", "plugin"},
-		"categories": []interface{}{"test"},
-	})
+	return structpb.NewStruct(Config)
 }
 
 // OnConfigLoaded is called when the global config is loaded by GatewayD.
