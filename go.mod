@@ -3,7 +3,6 @@ module github.com/gatewayd-io/gatewayd-plugin-test
 go 1.18
 
 require (
-	github.com/davecgh/go-spew v1.1.1
 	github.com/hashicorp/go-plugin v1.4.6
 	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.27.1
