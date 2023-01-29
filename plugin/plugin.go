@@ -2,8 +2,10 @@ package plugin
 
 import (
 	"context"
+	"encoding/base64"
 
 	plugin_v1 "github.com/gatewayd-io/gatewayd-plugin-test/plugin/v1"
+	"github.com/hashicorp/go-hclog"
 	goplugin "github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/structpb"
@@ -22,6 +24,7 @@ var PluginMap = map[string]goplugin.Plugin{
 type Plugin struct {
 	goplugin.GRPCPlugin
 	plugin_v1.GatewayDPluginServiceServer
+	Logger hclog.Logger
 }
 
 type TestPlugin struct {
@@ -63,7 +66,12 @@ func (p *Plugin) GetPluginConfig(
 			"key": "value",
 		},
 		// TODO: Use enum/constant for hooks
-		"hooks":      []interface{}{"onConfigLoaded", "onPluginConfigLoaded"},
+		"hooks": []interface{}{
+			"onConfigLoaded",
+			"onPluginConfigLoaded", // This leads to an error and will be ignored
+			"onIngressTraffic",
+			"onEgressTraffic",
+		},
 		"tags":       []interface{}{"test", "plugin"},
 		"categories": []interface{}{"test"},
 	})
@@ -85,4 +93,23 @@ func (p *Plugin) OnConfigLoaded(
 		},
 	}
 	return req, nil
+}
+
+func (p *Plugin) OnIngressTraffic(
+	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+	request := req.Fields["request"].GetStringValue()
+	if reqBytes, err := base64.StdEncoding.DecodeString(request); err == nil {
+		p.Logger.Trace("OnIngressTraffic", "request", string(reqBytes))
+	}
+
+	return req, nil
+}
+
+func (p *Plugin) OnEgressTraffic(
+	ctx context.Context, resp *structpb.Struct) (*structpb.Struct, error) {
+	response := resp.Fields["response"].GetStringValue()
+	if respBytes, err := base64.StdEncoding.DecodeString(response); err == nil {
+		p.Logger.Trace("OnEgressTraffic", "response", string(respBytes))
+	}
+	return resp, nil
 }
