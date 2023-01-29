@@ -99,7 +99,7 @@ func (p *Plugin) OnIngressTraffic(
 	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
 	request := req.Fields["request"].GetStringValue()
 	if reqBytes, err := base64.StdEncoding.DecodeString(request); err == nil {
-		p.Logger.Trace("OnIngressTraffic", "request", string(reqBytes))
+		p.Logger.Debug("OnIngressTraffic", "request", string(reqBytes))
 	}
 
 	return req, nil
@@ -109,7 +109,7 @@ func (p *Plugin) OnEgressTraffic(
 	ctx context.Context, resp *structpb.Struct) (*structpb.Struct, error) {
 	response := resp.Fields["response"].GetStringValue()
 	if respBytes, err := base64.StdEncoding.DecodeString(response); err == nil {
-		p.Logger.Trace("OnEgressTraffic", "response", string(respBytes))
+		p.Logger.Debug("OnEgressTraffic", "response", string(respBytes))
 	}
 	return resp, nil
 }
