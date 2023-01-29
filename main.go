@@ -7,6 +7,8 @@ import (
 
 	sdkConfig "github.com/gatewayd-io/gatewayd-plugin-sdk/config"
 	"github.com/gatewayd-io/gatewayd-plugin-sdk/logging"
+	"github.com/gatewayd-io/gatewayd-plugin-sdk/metrics"
+	v1 "github.com/gatewayd-io/gatewayd-plugin-sdk/plugin/v1"
 	"github.com/gatewayd-io/gatewayd-plugin-test/plugin"
 	"github.com/hashicorp/go-hclog"
 	goplugin "github.com/hashicorp/go-plugin"
@@ -32,12 +34,12 @@ func main() {
 	var config map[string]interface{}
 	mapstructure.Decode(plugin.PluginConfig["config"], &config)
 	if metricsEnabled, err := strconv.ParseBool(config["metricsEnabled"].(string)); err == nil {
-		metricsConfig := plugin.MetricsConfig{
+		metricsConfig := metrics.MetricsConfig{
 			Enabled:          metricsEnabled,
 			UnixDomainSocket: config["metricsUnixDomainSocket"].(string),
 			Endpoint:         config["metricsEndpoint"].(string),
 		}
-		go plugin.ExposeMetrics(metricsConfig, logger)
+		go metrics.ExposeMetrics(metricsConfig, logger)
 	}
 
 	goplugin.Serve(&goplugin.ServeConfig{
@@ -46,9 +48,9 @@ func main() {
 			MagicCookieKey:   sdkConfig.GetEnv("MAGIC_COOKIE_KEY", ""),
 			MagicCookieValue: sdkConfig.GetEnv("MAGIC_COOKIE_VALUE", ""),
 		},
-		Plugins: goplugin.PluginSet{
+		Plugins: v1.GetPluginSetMap(map[string]goplugin.Plugin{
 			"gateway-plugin-test": pluginInstance,
-		},
+		}),
 		GRPCServer: goplugin.DefaultGRPCServer,
 		Logger:     logger,
 	})
