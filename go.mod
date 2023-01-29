@@ -3,10 +3,9 @@ module github.com/gatewayd-io/gatewayd-plugin-test
 go 1.18
 
 require (
-	github.com/gatewayd-io/gatewayd-plugin-sdk v0.0.3
+	github.com/gatewayd-io/gatewayd-plugin-sdk v0.0.4
 	github.com/hashicorp/go-hclog v1.4.0
 	github.com/hashicorp/go-plugin v1.4.8
-	github.com/mitchellh/mapstructure v1.5.0
 	github.com/prometheus/client_golang v1.14.0
 	google.golang.org/grpc v1.52.3
 	google.golang.org/protobuf v1.28.1
