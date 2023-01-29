@@ -37,6 +37,7 @@ func main() {
 	})
 }
 
+// GetLogLevel returns the hclog level based on the string passed in.
 func GetLogLevel(logLevel string) hclog.Level {
 	switch logLevel {
 	case "trace":

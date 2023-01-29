@@ -32,6 +32,7 @@ type TestPlugin struct {
 	Impl Plugin
 }
 
+// NewTestPlugin returns a new instance of the TestPlugin.
 func NewTestPlugin(impl Plugin) *TestPlugin {
 	return &TestPlugin{
 		NetRPCUnsupportedPlugin: goplugin.NetRPCUnsupportedPlugin{},
@@ -39,15 +40,18 @@ func NewTestPlugin(impl Plugin) *TestPlugin {
 	}
 }
 
+// GRPCServer registers the plugin with the gRPC server.
 func (p *TestPlugin) GRPCServer(b *goplugin.GRPCBroker, s *grpc.Server) error {
 	plugin_v1.RegisterGatewayDPluginServiceServer(s, &p.Impl)
 	return nil
 }
 
+// GRPCClient returns the plugin client.
 func (p *TestPlugin) GRPCClient(ctx context.Context, b *goplugin.GRPCBroker, c *grpc.ClientConn) (interface{}, error) {
 	return plugin_v1.NewGatewayDPluginServiceClient(c), nil
 }
 
+// GetPluginConfig returns the plugin config.
 func (p *Plugin) GetPluginConfig(
 	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
 	return structpb.NewStruct(map[string]interface{}{
@@ -77,6 +81,7 @@ func (p *Plugin) GetPluginConfig(
 	})
 }
 
+// OnConfigLoaded is called when the global config is loaded by GatewayD.
 func (p *Plugin) OnConfigLoaded(
 	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
 	if req.Fields == nil {
@@ -95,6 +100,7 @@ func (p *Plugin) OnConfigLoaded(
 	return req, nil
 }
 
+// OnIngressTraffic is called when a request is received by GatewayD from the client.
 func (p *Plugin) OnIngressTraffic(
 	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
 	request := req.Fields["request"].GetStringValue()
@@ -105,6 +111,7 @@ func (p *Plugin) OnIngressTraffic(
 	return req, nil
 }
 
+// OnEgressTraffic is called when a response is received by GatewayD from the server.
 func (p *Plugin) OnEgressTraffic(
 	ctx context.Context, resp *structpb.Struct) (*structpb.Struct, error) {
 	response := resp.Fields["response"].GetStringValue()
