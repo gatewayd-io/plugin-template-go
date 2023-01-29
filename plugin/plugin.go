@@ -91,6 +91,8 @@ func (p *Plugin) GetPluginConfig(
 // OnConfigLoaded is called when the global config is loaded by GatewayD.
 func (p *Plugin) OnConfigLoaded(
 	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+	OnConfigLoaded.Inc()
+
 	if req.Fields == nil {
 		req.Fields = make(map[string]*structpb.Value)
 	}
@@ -110,6 +112,8 @@ func (p *Plugin) OnConfigLoaded(
 // OnTrafficFromClient is called when a request is received by GatewayD from the client.
 func (p *Plugin) OnTrafficFromClient(
 	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+	OnTrafficFromClient.Inc()
+
 	request := req.Fields["request"].GetStringValue()
 	if reqBytes, err := base64.StdEncoding.DecodeString(request); err == nil {
 		p.Logger.Debug("OnIngressTraffic", "request", string(reqBytes))
@@ -121,6 +125,8 @@ func (p *Plugin) OnTrafficFromClient(
 // OnTrafficFromServer is called when a response is received by GatewayD from the server.
 func (p *Plugin) OnTrafficFromServer(
 	ctx context.Context, resp *structpb.Struct) (*structpb.Struct, error) {
+	OnTrafficFromServer.Inc()
+
 	response := resp.Fields["response"].GetStringValue()
 	if respBytes, err := base64.StdEncoding.DecodeString(response); err == nil {
 		p.Logger.Debug("OnEgressTraffic", "response", string(respBytes))
