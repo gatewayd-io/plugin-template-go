@@ -69,6 +69,13 @@ func (p *Plugin) GetPluginConfig(
 		"config": map[string]interface{}{
 			"key": "value",
 		},
+		// "requires": []interface{}{
+		// 	map[string]interface{}{
+		// 		"name":      "gatewayd-plugin-non-existing",
+		// 		"version":   "0.0.1",
+		// 		"remoteUrl": "github.com/gatewayd-io/gatewayd-plugin-non-existing",
+		// 	},
+		// },
 		// TODO: Use enum/constant for hooks
 		"hooks": []interface{}{
 			"onConfigLoaded",
