@@ -1,5 +1,5 @@
 build:
-	go build -ldflags "-s -w"
+	go mod tidy && go build -ldflags "-s -w"
 
 checksum:
 	sha256sum -b gatewayd-plugin-test
