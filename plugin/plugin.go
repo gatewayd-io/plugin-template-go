@@ -15,12 +15,6 @@ var PluginID = v1.PluginID{
 	RemoteUrl: "github.com/gatewayd-io/gatewayd-plugin-test",
 }
 
-var Handshake = goplugin.HandshakeConfig{
-	ProtocolVersion:  1,
-	MagicCookieKey:   "GATEWAYD_PLUGIN",
-	MagicCookieValue: "5712b87aa5d7e9f9e9ab643e6603181c5b796015cb1c09d6f5ada882bf2a1872",
-}
-
 var PluginMap = map[string]goplugin.Plugin{
 	"gatewayd-plugin-test": &TestPlugin{},
 }
