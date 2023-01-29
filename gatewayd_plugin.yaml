@@ -4,6 +4,8 @@
 verificationPolicy: "passdown"
 # Possible values: "strict" (default) and "loose"
 compatibilityPolicy: "strict"
+# Possible values: "accept" (default) and "reject" 
+acceptancePolicy: "accept"
 
 plugins:
   # Plugin name
@@ -23,4 +25,4 @@ plugins:
       - MAGIC_COOKIE_KEY=GATEWAYD_PLUGIN
       - MAGIC_COOKIE_VALUE=5712b87aa5d7e9f9e9ab643e6603181c5b796015cb1c09d6f5ada882bf2a1872
     # Checksum hash to verify the binary before loading
-    checksum: 9c12267332a609ed7c739098a0aa7614f580ba174f35f611fc1cc53de5647bff
+    checksum: 6b367989d88abc9a3e0074176593f3339cab88c93c67ed34dc7e56e3826c8d75
