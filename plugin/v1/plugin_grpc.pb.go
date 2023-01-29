@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -18,774 +19,774 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// GDPServiceClient is the client API for GDPService service.
+// GatewayDPluginServiceClient is the client API for GatewayDPluginService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type GDPServiceClient interface {
-	// PluginConfig returns the plugin config for registration
-	PluginConfig(ctx context.Context, in *PluginConfigRequest, opts ...grpc.CallOption) (*PluginConfigResponse, error)
+type GatewayDPluginServiceClient interface {
+	// GetPluginConfig returns the plugin config upon registration
+	GetPluginConfig(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
 	// OnConfigLoaded is called when the config is loaded from any config provider
-	OnConfigLoaded(ctx context.Context, in *OnConfigLoadedRequest, opts ...grpc.CallOption) (*OnConfigLoadedResponse, error)
-	OnNewLogger(ctx context.Context, in *OnNewLoggerRequest, opts ...grpc.CallOption) (*OnNewLoggerResponse, error)
-	OnNewPool(ctx context.Context, in *OnNewPoolRequest, opts ...grpc.CallOption) (*OnNewPoolResponse, error)
-	OnNewProxy(ctx context.Context, in *OnNewProxyRequest, opts ...grpc.CallOption) (*OnNewProxyResponse, error)
-	OnNewServer(ctx context.Context, in *OnNewServerRequest, opts ...grpc.CallOption) (*OnNewServerResponse, error)
-	OnSignal(ctx context.Context, in *OnSignalRequest, opts ...grpc.CallOption) (*OnSignalResponse, error)
-	OnRun(ctx context.Context, in *OnRunRequest, opts ...grpc.CallOption) (*OnRunResponse, error)
-	OnBooting(ctx context.Context, in *OnBootingRequest, opts ...grpc.CallOption) (*OnBootingResponse, error)
-	OnBooted(ctx context.Context, in *OnBootedRequest, opts ...grpc.CallOption) (*OnBootedResponse, error)
-	OnOpening(ctx context.Context, in *OnOpeningRequest, opts ...grpc.CallOption) (*OnOpeningResponse, error)
-	OnOpened(ctx context.Context, in *OnOpenedRequest, opts ...grpc.CallOption) (*OnOpenedResponse, error)
-	OnClosing(ctx context.Context, in *OnClosingRequest, opts ...grpc.CallOption) (*OnClosingResponse, error)
-	OnClosed(ctx context.Context, in *OnClosedRequest, opts ...grpc.CallOption) (*OnClosedResponse, error)
-	OnTraffic(ctx context.Context, in *OnTrafficRequest, opts ...grpc.CallOption) (*OnTrafficResponse, error)
-	OnIngressTraffic(ctx context.Context, in *OnIngressTrafficRequest, opts ...grpc.CallOption) (*OnIngressTrafficResponse, error)
-	OnEgressTraffic(ctx context.Context, in *OnEgressTrafficRequest, opts ...grpc.CallOption) (*OnEgressTrafficResponse, error)
-	OnShutdown(ctx context.Context, in *OnShutdownRequest, opts ...grpc.CallOption) (*OnShutdownResponse, error)
-	OnTick(ctx context.Context, in *OnTickRequest, opts ...grpc.CallOption) (*OnTickResponse, error)
-	OnNewClient(ctx context.Context, in *OnNewClientRequest, opts ...grpc.CallOption) (*OnNewClientResponse, error)
+	OnConfigLoaded(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnNewLogger(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnNewPool(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnNewProxy(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnNewServer(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnSignal(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnRun(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnBooting(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnBooted(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnOpening(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnOpened(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnClosing(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnClosed(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnTraffic(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnIngressTraffic(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnEgressTraffic(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnShutdown(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnTick(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
+	OnNewClient(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error)
 }
 
-type gDPServiceClient struct {
+type gatewayDPluginServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewGDPServiceClient(cc grpc.ClientConnInterface) GDPServiceClient {
-	return &gDPServiceClient{cc}
+func NewGatewayDPluginServiceClient(cc grpc.ClientConnInterface) GatewayDPluginServiceClient {
+	return &gatewayDPluginServiceClient{cc}
 }
 
-func (c *gDPServiceClient) PluginConfig(ctx context.Context, in *PluginConfigRequest, opts ...grpc.CallOption) (*PluginConfigResponse, error) {
-	out := new(PluginConfigResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/PluginConfig", in, out, opts...)
+func (c *gatewayDPluginServiceClient) GetPluginConfig(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/GetPluginConfig", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnConfigLoaded(ctx context.Context, in *OnConfigLoadedRequest, opts ...grpc.CallOption) (*OnConfigLoadedResponse, error) {
-	out := new(OnConfigLoadedResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnConfigLoaded", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnConfigLoaded(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnConfigLoaded", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnNewLogger(ctx context.Context, in *OnNewLoggerRequest, opts ...grpc.CallOption) (*OnNewLoggerResponse, error) {
-	out := new(OnNewLoggerResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnNewLogger", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnNewLogger(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnNewLogger", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnNewPool(ctx context.Context, in *OnNewPoolRequest, opts ...grpc.CallOption) (*OnNewPoolResponse, error) {
-	out := new(OnNewPoolResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnNewPool", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnNewPool(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnNewPool", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnNewProxy(ctx context.Context, in *OnNewProxyRequest, opts ...grpc.CallOption) (*OnNewProxyResponse, error) {
-	out := new(OnNewProxyResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnNewProxy", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnNewProxy(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnNewProxy", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnNewServer(ctx context.Context, in *OnNewServerRequest, opts ...grpc.CallOption) (*OnNewServerResponse, error) {
-	out := new(OnNewServerResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnNewServer", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnNewServer(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnNewServer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnSignal(ctx context.Context, in *OnSignalRequest, opts ...grpc.CallOption) (*OnSignalResponse, error) {
-	out := new(OnSignalResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnSignal", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnSignal(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnSignal", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnRun(ctx context.Context, in *OnRunRequest, opts ...grpc.CallOption) (*OnRunResponse, error) {
-	out := new(OnRunResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnRun", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnRun(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnBooting(ctx context.Context, in *OnBootingRequest, opts ...grpc.CallOption) (*OnBootingResponse, error) {
-	out := new(OnBootingResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnBooting", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnBooting(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnBooting", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnBooted(ctx context.Context, in *OnBootedRequest, opts ...grpc.CallOption) (*OnBootedResponse, error) {
-	out := new(OnBootedResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnBooted", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnBooted(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnBooted", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnOpening(ctx context.Context, in *OnOpeningRequest, opts ...grpc.CallOption) (*OnOpeningResponse, error) {
-	out := new(OnOpeningResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnOpening", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnOpening(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnOpening", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnOpened(ctx context.Context, in *OnOpenedRequest, opts ...grpc.CallOption) (*OnOpenedResponse, error) {
-	out := new(OnOpenedResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnOpened", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnOpened(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnOpened", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnClosing(ctx context.Context, in *OnClosingRequest, opts ...grpc.CallOption) (*OnClosingResponse, error) {
-	out := new(OnClosingResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnClosing", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnClosing(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnClosing", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnClosed(ctx context.Context, in *OnClosedRequest, opts ...grpc.CallOption) (*OnClosedResponse, error) {
-	out := new(OnClosedResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnClosed", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnClosed(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnClosed", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnTraffic(ctx context.Context, in *OnTrafficRequest, opts ...grpc.CallOption) (*OnTrafficResponse, error) {
-	out := new(OnTrafficResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnTraffic", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnTraffic(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnTraffic", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnIngressTraffic(ctx context.Context, in *OnIngressTrafficRequest, opts ...grpc.CallOption) (*OnIngressTrafficResponse, error) {
-	out := new(OnIngressTrafficResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnIngressTraffic", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnIngressTraffic(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnIngressTraffic", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnEgressTraffic(ctx context.Context, in *OnEgressTrafficRequest, opts ...grpc.CallOption) (*OnEgressTrafficResponse, error) {
-	out := new(OnEgressTrafficResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnEgressTraffic", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnEgressTraffic(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnEgressTraffic", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnShutdown(ctx context.Context, in *OnShutdownRequest, opts ...grpc.CallOption) (*OnShutdownResponse, error) {
-	out := new(OnShutdownResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnShutdown", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnShutdown(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnShutdown", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnTick(ctx context.Context, in *OnTickRequest, opts ...grpc.CallOption) (*OnTickResponse, error) {
-	out := new(OnTickResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnTick", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnTick(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnTick", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gDPServiceClient) OnNewClient(ctx context.Context, in *OnNewClientRequest, opts ...grpc.CallOption) (*OnNewClientResponse, error) {
-	out := new(OnNewClientResponse)
-	err := c.cc.Invoke(ctx, "/plugin.v1.GDPService/OnNewClient", in, out, opts...)
+func (c *gatewayDPluginServiceClient) OnNewClient(ctx context.Context, in *structpb.Struct, opts ...grpc.CallOption) (*structpb.Struct, error) {
+	out := new(structpb.Struct)
+	err := c.cc.Invoke(ctx, "/plugin.v1.GatewayDPluginService/OnNewClient", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// GDPServiceServer is the server API for GDPService service.
-// All implementations must embed UnimplementedGDPServiceServer
+// GatewayDPluginServiceServer is the server API for GatewayDPluginService service.
+// All implementations must embed UnimplementedGatewayDPluginServiceServer
 // for forward compatibility
-type GDPServiceServer interface {
-	// PluginConfig returns the plugin config for registration
-	PluginConfig(context.Context, *PluginConfigRequest) (*PluginConfigResponse, error)
+type GatewayDPluginServiceServer interface {
+	// GetPluginConfig returns the plugin config upon registration
+	GetPluginConfig(context.Context, *structpb.Struct) (*structpb.Struct, error)
 	// OnConfigLoaded is called when the config is loaded from any config provider
-	OnConfigLoaded(context.Context, *OnConfigLoadedRequest) (*OnConfigLoadedResponse, error)
-	OnNewLogger(context.Context, *OnNewLoggerRequest) (*OnNewLoggerResponse, error)
-	OnNewPool(context.Context, *OnNewPoolRequest) (*OnNewPoolResponse, error)
-	OnNewProxy(context.Context, *OnNewProxyRequest) (*OnNewProxyResponse, error)
-	OnNewServer(context.Context, *OnNewServerRequest) (*OnNewServerResponse, error)
-	OnSignal(context.Context, *OnSignalRequest) (*OnSignalResponse, error)
-	OnRun(context.Context, *OnRunRequest) (*OnRunResponse, error)
-	OnBooting(context.Context, *OnBootingRequest) (*OnBootingResponse, error)
-	OnBooted(context.Context, *OnBootedRequest) (*OnBootedResponse, error)
-	OnOpening(context.Context, *OnOpeningRequest) (*OnOpeningResponse, error)
-	OnOpened(context.Context, *OnOpenedRequest) (*OnOpenedResponse, error)
-	OnClosing(context.Context, *OnClosingRequest) (*OnClosingResponse, error)
-	OnClosed(context.Context, *OnClosedRequest) (*OnClosedResponse, error)
-	OnTraffic(context.Context, *OnTrafficRequest) (*OnTrafficResponse, error)
-	OnIngressTraffic(context.Context, *OnIngressTrafficRequest) (*OnIngressTrafficResponse, error)
-	OnEgressTraffic(context.Context, *OnEgressTrafficRequest) (*OnEgressTrafficResponse, error)
-	OnShutdown(context.Context, *OnShutdownRequest) (*OnShutdownResponse, error)
-	OnTick(context.Context, *OnTickRequest) (*OnTickResponse, error)
-	OnNewClient(context.Context, *OnNewClientRequest) (*OnNewClientResponse, error)
-	mustEmbedUnimplementedGDPServiceServer()
+	OnConfigLoaded(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnNewLogger(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnNewPool(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnNewProxy(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnNewServer(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnSignal(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnRun(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnBooting(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnBooted(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnOpening(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnOpened(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnClosing(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnClosed(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnTraffic(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnIngressTraffic(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnEgressTraffic(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnShutdown(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnTick(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	OnNewClient(context.Context, *structpb.Struct) (*structpb.Struct, error)
+	mustEmbedUnimplementedGatewayDPluginServiceServer()
 }
 
-// UnimplementedGDPServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedGDPServiceServer struct {
+// UnimplementedGatewayDPluginServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedGatewayDPluginServiceServer struct {
 }
 
-func (UnimplementedGDPServiceServer) PluginConfig(context.Context, *PluginConfigRequest) (*PluginConfigResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PluginConfig not implemented")
+func (UnimplementedGatewayDPluginServiceServer) GetPluginConfig(context.Context, *structpb.Struct) (*structpb.Struct, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPluginConfig not implemented")
 }
-func (UnimplementedGDPServiceServer) OnConfigLoaded(context.Context, *OnConfigLoadedRequest) (*OnConfigLoadedResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnConfigLoaded(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnConfigLoaded not implemented")
 }
-func (UnimplementedGDPServiceServer) OnNewLogger(context.Context, *OnNewLoggerRequest) (*OnNewLoggerResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnNewLogger(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnNewLogger not implemented")
 }
-func (UnimplementedGDPServiceServer) OnNewPool(context.Context, *OnNewPoolRequest) (*OnNewPoolResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnNewPool(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnNewPool not implemented")
 }
-func (UnimplementedGDPServiceServer) OnNewProxy(context.Context, *OnNewProxyRequest) (*OnNewProxyResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnNewProxy(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnNewProxy not implemented")
 }
-func (UnimplementedGDPServiceServer) OnNewServer(context.Context, *OnNewServerRequest) (*OnNewServerResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnNewServer(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnNewServer not implemented")
 }
-func (UnimplementedGDPServiceServer) OnSignal(context.Context, *OnSignalRequest) (*OnSignalResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnSignal(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnSignal not implemented")
 }
-func (UnimplementedGDPServiceServer) OnRun(context.Context, *OnRunRequest) (*OnRunResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnRun(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnRun not implemented")
 }
-func (UnimplementedGDPServiceServer) OnBooting(context.Context, *OnBootingRequest) (*OnBootingResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnBooting(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnBooting not implemented")
 }
-func (UnimplementedGDPServiceServer) OnBooted(context.Context, *OnBootedRequest) (*OnBootedResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnBooted(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnBooted not implemented")
 }
-func (UnimplementedGDPServiceServer) OnOpening(context.Context, *OnOpeningRequest) (*OnOpeningResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnOpening(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnOpening not implemented")
 }
-func (UnimplementedGDPServiceServer) OnOpened(context.Context, *OnOpenedRequest) (*OnOpenedResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnOpened(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnOpened not implemented")
 }
-func (UnimplementedGDPServiceServer) OnClosing(context.Context, *OnClosingRequest) (*OnClosingResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnClosing(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnClosing not implemented")
 }
-func (UnimplementedGDPServiceServer) OnClosed(context.Context, *OnClosedRequest) (*OnClosedResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnClosed(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnClosed not implemented")
 }
-func (UnimplementedGDPServiceServer) OnTraffic(context.Context, *OnTrafficRequest) (*OnTrafficResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnTraffic(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnTraffic not implemented")
 }
-func (UnimplementedGDPServiceServer) OnIngressTraffic(context.Context, *OnIngressTrafficRequest) (*OnIngressTrafficResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnIngressTraffic(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnIngressTraffic not implemented")
 }
-func (UnimplementedGDPServiceServer) OnEgressTraffic(context.Context, *OnEgressTrafficRequest) (*OnEgressTrafficResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnEgressTraffic(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnEgressTraffic not implemented")
 }
-func (UnimplementedGDPServiceServer) OnShutdown(context.Context, *OnShutdownRequest) (*OnShutdownResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnShutdown(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnShutdown not implemented")
 }
-func (UnimplementedGDPServiceServer) OnTick(context.Context, *OnTickRequest) (*OnTickResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnTick(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnTick not implemented")
 }
-func (UnimplementedGDPServiceServer) OnNewClient(context.Context, *OnNewClientRequest) (*OnNewClientResponse, error) {
+func (UnimplementedGatewayDPluginServiceServer) OnNewClient(context.Context, *structpb.Struct) (*structpb.Struct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OnNewClient not implemented")
 }
-func (UnimplementedGDPServiceServer) mustEmbedUnimplementedGDPServiceServer() {}
+func (UnimplementedGatewayDPluginServiceServer) mustEmbedUnimplementedGatewayDPluginServiceServer() {}
 
-// UnsafeGDPServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to GDPServiceServer will
+// UnsafeGatewayDPluginServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to GatewayDPluginServiceServer will
 // result in compilation errors.
-type UnsafeGDPServiceServer interface {
-	mustEmbedUnimplementedGDPServiceServer()
+type UnsafeGatewayDPluginServiceServer interface {
+	mustEmbedUnimplementedGatewayDPluginServiceServer()
 }
 
-func RegisterGDPServiceServer(s grpc.ServiceRegistrar, srv GDPServiceServer) {
-	s.RegisterService(&GDPService_ServiceDesc, srv)
+func RegisterGatewayDPluginServiceServer(s grpc.ServiceRegistrar, srv GatewayDPluginServiceServer) {
+	s.RegisterService(&GatewayDPluginService_ServiceDesc, srv)
 }
 
-func _GDPService_PluginConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PluginConfigRequest)
+func _GatewayDPluginService_GetPluginConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).PluginConfig(ctx, in)
+		return srv.(GatewayDPluginServiceServer).GetPluginConfig(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/PluginConfig",
+		FullMethod: "/plugin.v1.GatewayDPluginService/GetPluginConfig",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).PluginConfig(ctx, req.(*PluginConfigRequest))
+		return srv.(GatewayDPluginServiceServer).GetPluginConfig(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnConfigLoaded_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnConfigLoadedRequest)
+func _GatewayDPluginService_OnConfigLoaded_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnConfigLoaded(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnConfigLoaded(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnConfigLoaded",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnConfigLoaded",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnConfigLoaded(ctx, req.(*OnConfigLoadedRequest))
+		return srv.(GatewayDPluginServiceServer).OnConfigLoaded(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnNewLogger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnNewLoggerRequest)
+func _GatewayDPluginService_OnNewLogger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnNewLogger(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnNewLogger(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnNewLogger",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnNewLogger",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnNewLogger(ctx, req.(*OnNewLoggerRequest))
+		return srv.(GatewayDPluginServiceServer).OnNewLogger(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnNewPool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnNewPoolRequest)
+func _GatewayDPluginService_OnNewPool_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnNewPool(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnNewPool(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnNewPool",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnNewPool",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnNewPool(ctx, req.(*OnNewPoolRequest))
+		return srv.(GatewayDPluginServiceServer).OnNewPool(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnNewProxy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnNewProxyRequest)
+func _GatewayDPluginService_OnNewProxy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnNewProxy(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnNewProxy(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnNewProxy",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnNewProxy",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnNewProxy(ctx, req.(*OnNewProxyRequest))
+		return srv.(GatewayDPluginServiceServer).OnNewProxy(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnNewServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnNewServerRequest)
+func _GatewayDPluginService_OnNewServer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnNewServer(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnNewServer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnNewServer",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnNewServer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnNewServer(ctx, req.(*OnNewServerRequest))
+		return srv.(GatewayDPluginServiceServer).OnNewServer(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnSignal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnSignalRequest)
+func _GatewayDPluginService_OnSignal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnSignal(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnSignal(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnSignal",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnSignal",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnSignal(ctx, req.(*OnSignalRequest))
+		return srv.(GatewayDPluginServiceServer).OnSignal(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnRunRequest)
+func _GatewayDPluginService_OnRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnRun(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnRun",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnRun(ctx, req.(*OnRunRequest))
+		return srv.(GatewayDPluginServiceServer).OnRun(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnBooting_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnBootingRequest)
+func _GatewayDPluginService_OnBooting_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnBooting(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnBooting(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnBooting",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnBooting",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnBooting(ctx, req.(*OnBootingRequest))
+		return srv.(GatewayDPluginServiceServer).OnBooting(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnBooted_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnBootedRequest)
+func _GatewayDPluginService_OnBooted_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnBooted(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnBooted(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnBooted",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnBooted",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnBooted(ctx, req.(*OnBootedRequest))
+		return srv.(GatewayDPluginServiceServer).OnBooted(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnOpening_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnOpeningRequest)
+func _GatewayDPluginService_OnOpening_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnOpening(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnOpening(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnOpening",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnOpening",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnOpening(ctx, req.(*OnOpeningRequest))
+		return srv.(GatewayDPluginServiceServer).OnOpening(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnOpened_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnOpenedRequest)
+func _GatewayDPluginService_OnOpened_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnOpened(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnOpened(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnOpened",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnOpened",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnOpened(ctx, req.(*OnOpenedRequest))
+		return srv.(GatewayDPluginServiceServer).OnOpened(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnClosing_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnClosingRequest)
+func _GatewayDPluginService_OnClosing_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnClosing(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnClosing(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnClosing",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnClosing",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnClosing(ctx, req.(*OnClosingRequest))
+		return srv.(GatewayDPluginServiceServer).OnClosing(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnClosed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnClosedRequest)
+func _GatewayDPluginService_OnClosed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnClosed(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnClosed(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnClosed",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnClosed",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnClosed(ctx, req.(*OnClosedRequest))
+		return srv.(GatewayDPluginServiceServer).OnClosed(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnTraffic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnTrafficRequest)
+func _GatewayDPluginService_OnTraffic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnTraffic(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnTraffic(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnTraffic",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnTraffic",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnTraffic(ctx, req.(*OnTrafficRequest))
+		return srv.(GatewayDPluginServiceServer).OnTraffic(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnIngressTraffic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnIngressTrafficRequest)
+func _GatewayDPluginService_OnIngressTraffic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnIngressTraffic(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnIngressTraffic(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnIngressTraffic",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnIngressTraffic",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnIngressTraffic(ctx, req.(*OnIngressTrafficRequest))
+		return srv.(GatewayDPluginServiceServer).OnIngressTraffic(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnEgressTraffic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnEgressTrafficRequest)
+func _GatewayDPluginService_OnEgressTraffic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnEgressTraffic(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnEgressTraffic(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnEgressTraffic",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnEgressTraffic",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnEgressTraffic(ctx, req.(*OnEgressTrafficRequest))
+		return srv.(GatewayDPluginServiceServer).OnEgressTraffic(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnShutdown_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnShutdownRequest)
+func _GatewayDPluginService_OnShutdown_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnShutdown(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnShutdown(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnShutdown",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnShutdown",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnShutdown(ctx, req.(*OnShutdownRequest))
+		return srv.(GatewayDPluginServiceServer).OnShutdown(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnTick_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnTickRequest)
+func _GatewayDPluginService_OnTick_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnTick(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnTick(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnTick",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnTick",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnTick(ctx, req.(*OnTickRequest))
+		return srv.(GatewayDPluginServiceServer).OnTick(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GDPService_OnNewClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OnNewClientRequest)
+func _GatewayDPluginService_OnNewClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(structpb.Struct)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GDPServiceServer).OnNewClient(ctx, in)
+		return srv.(GatewayDPluginServiceServer).OnNewClient(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/plugin.v1.GDPService/OnNewClient",
+		FullMethod: "/plugin.v1.GatewayDPluginService/OnNewClient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GDPServiceServer).OnNewClient(ctx, req.(*OnNewClientRequest))
+		return srv.(GatewayDPluginServiceServer).OnNewClient(ctx, req.(*structpb.Struct))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// GDPService_ServiceDesc is the grpc.ServiceDesc for GDPService service.
+// GatewayDPluginService_ServiceDesc is the grpc.ServiceDesc for GatewayDPluginService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var GDPService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "plugin.v1.GDPService",
-	HandlerType: (*GDPServiceServer)(nil),
+var GatewayDPluginService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "plugin.v1.GatewayDPluginService",
+	HandlerType: (*GatewayDPluginServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "PluginConfig",
-			Handler:    _GDPService_PluginConfig_Handler,
+			MethodName: "GetPluginConfig",
+			Handler:    _GatewayDPluginService_GetPluginConfig_Handler,
 		},
 		{
 			MethodName: "OnConfigLoaded",
-			Handler:    _GDPService_OnConfigLoaded_Handler,
+			Handler:    _GatewayDPluginService_OnConfigLoaded_Handler,
 		},
 		{
 			MethodName: "OnNewLogger",
-			Handler:    _GDPService_OnNewLogger_Handler,
+			Handler:    _GatewayDPluginService_OnNewLogger_Handler,
 		},
 		{
 			MethodName: "OnNewPool",
-			Handler:    _GDPService_OnNewPool_Handler,
+			Handler:    _GatewayDPluginService_OnNewPool_Handler,
 		},
 		{
 			MethodName: "OnNewProxy",
-			Handler:    _GDPService_OnNewProxy_Handler,
+			Handler:    _GatewayDPluginService_OnNewProxy_Handler,
 		},
 		{
 			MethodName: "OnNewServer",
-			Handler:    _GDPService_OnNewServer_Handler,
+			Handler:    _GatewayDPluginService_OnNewServer_Handler,
 		},
 		{
 			MethodName: "OnSignal",
-			Handler:    _GDPService_OnSignal_Handler,
+			Handler:    _GatewayDPluginService_OnSignal_Handler,
 		},
 		{
 			MethodName: "OnRun",
-			Handler:    _GDPService_OnRun_Handler,
+			Handler:    _GatewayDPluginService_OnRun_Handler,
 		},
 		{
 			MethodName: "OnBooting",
-			Handler:    _GDPService_OnBooting_Handler,
+			Handler:    _GatewayDPluginService_OnBooting_Handler,
 		},
 		{
 			MethodName: "OnBooted",
-			Handler:    _GDPService_OnBooted_Handler,
+			Handler:    _GatewayDPluginService_OnBooted_Handler,
 		},
 		{
 			MethodName: "OnOpening",
-			Handler:    _GDPService_OnOpening_Handler,
+			Handler:    _GatewayDPluginService_OnOpening_Handler,
 		},
 		{
 			MethodName: "OnOpened",
-			Handler:    _GDPService_OnOpened_Handler,
+			Handler:    _GatewayDPluginService_OnOpened_Handler,
 		},
 		{
 			MethodName: "OnClosing",
-			Handler:    _GDPService_OnClosing_Handler,
+			Handler:    _GatewayDPluginService_OnClosing_Handler,
 		},
 		{
 			MethodName: "OnClosed",
-			Handler:    _GDPService_OnClosed_Handler,
+			Handler:    _GatewayDPluginService_OnClosed_Handler,
 		},
 		{
 			MethodName: "OnTraffic",
-			Handler:    _GDPService_OnTraffic_Handler,
+			Handler:    _GatewayDPluginService_OnTraffic_Handler,
 		},
 		{
 			MethodName: "OnIngressTraffic",
-			Handler:    _GDPService_OnIngressTraffic_Handler,
+			Handler:    _GatewayDPluginService_OnIngressTraffic_Handler,
 		},
 		{
 			MethodName: "OnEgressTraffic",
-			Handler:    _GDPService_OnEgressTraffic_Handler,
+			Handler:    _GatewayDPluginService_OnEgressTraffic_Handler,
 		},
 		{
 			MethodName: "OnShutdown",
-			Handler:    _GDPService_OnShutdown_Handler,
+			Handler:    _GatewayDPluginService_OnShutdown_Handler,
 		},
 		{
 			MethodName: "OnTick",
-			Handler:    _GDPService_OnTick_Handler,
+			Handler:    _GatewayDPluginService_OnTick_Handler,
 		},
 		{
 			MethodName: "OnNewClient",
-			Handler:    _GDPService_OnNewClient_Handler,
+			Handler:    _GatewayDPluginService_OnNewClient_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
