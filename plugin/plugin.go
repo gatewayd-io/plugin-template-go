@@ -80,8 +80,8 @@ func (p *Plugin) GetPluginConfig(
 		"hooks": []interface{}{
 			"onConfigLoaded",
 			"onPluginConfigLoaded", // This leads to an error and will be ignored
-			"onIngressTraffic",
-			"onEgressTraffic",
+			"onTrafficFromClient",
+			"onTrafficFromServer",
 		},
 		"tags":       []interface{}{"test", "plugin"},
 		"categories": []interface{}{"test"},
@@ -107,8 +107,8 @@ func (p *Plugin) OnConfigLoaded(
 	return req, nil
 }
 
-// OnIngressTraffic is called when a request is received by GatewayD from the client.
-func (p *Plugin) OnIngressTraffic(
+// OnTrafficFromClient is called when a request is received by GatewayD from the client.
+func (p *Plugin) OnTrafficFromClient(
 	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
 	request := req.Fields["request"].GetStringValue()
 	if reqBytes, err := base64.StdEncoding.DecodeString(request); err == nil {
@@ -118,8 +118,8 @@ func (p *Plugin) OnIngressTraffic(
 	return req, nil
 }
 
-// OnEgressTraffic is called when a response is received by GatewayD from the server.
-func (p *Plugin) OnEgressTraffic(
+// OnTrafficFromServer is called when a response is received by GatewayD from the server.
+func (p *Plugin) OnTrafficFromServer(
 	ctx context.Context, resp *structpb.Struct) (*structpb.Struct, error) {
 	response := resp.Fields["response"].GetStringValue()
 	if respBytes, err := base64.StdEncoding.DecodeString(response); err == nil {
