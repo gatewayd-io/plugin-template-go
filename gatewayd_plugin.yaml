@@ -7,6 +7,7 @@ compatibilityPolicy: "strict"
 # Possible values: "accept" (default) and "reject" 
 acceptancePolicy: "accept"
 metricsMergerPeriod: 5s
+healthCheckPeriod: 5s
 
 plugins:
   # Plugin name
