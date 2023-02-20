@@ -44,11 +44,32 @@ var (
 		// TODO: Use enum/constant for hooks
 		"hooks": []interface{}{
 			"onConfigLoaded",
-			"onPluginConfigLoaded", // This leads to an error and will be ignored
+			"onNewLogger",
+			"onNewPool",
+			"onNewClient",
+			"onNewProxy",
+			"onNewServer",
+			"onSignal",
+			"onRun",
+			"onBooting",
+			"onBooted",
+			"onOpening",
+			"onOpened",
+			"onClosing",
+			"onClosed",
+			"onTraffic",
+			"onShutdown",
+			"onTick",
 			"onTrafficFromClient",
+			"onTrafficToServer",
 			"onTrafficFromServer",
+			"onTrafficToClient",
+			// The following hook is invalid, and leads to an error in GatewayD,
+			// but it'll be ignored. This is used for testing purposes. Feel free
+			// to remove it in your plugin.
+			"onPluginConfigLoaded",
 		},
-		"tags":       []interface{}{"test", "plugin"},
-		"categories": []interface{}{"test"},
+		"tags":       []interface{}{"template", "plugin"},
+		"categories": []interface{}{"template"},
 	}
 )
