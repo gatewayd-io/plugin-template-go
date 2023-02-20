@@ -7,12 +7,12 @@ import (
 
 var (
 	PluginID = v1.PluginID{
-		Name:      "gatewayd-plugin-test",
+		Name:      "gatewayd-plugin-template",
 		Version:   "0.0.1",
-		RemoteUrl: "github.com/gatewayd-io/gatewayd-plugin-test",
+		RemoteUrl: "github.com/gatewayd-io/gatewayd-plugin-template",
 	}
 	PluginMap = map[string]goplugin.Plugin{
-		"gatewayd-plugin-test": &TestPlugin{},
+		"gatewayd-plugin-template": &TemplatePlugin{},
 	}
 	// TODO: Handle this in a better way
 	// https://github.com/gatewayd-io/gatewayd-plugin-sdk/issues/3
@@ -22,16 +22,16 @@ var (
 			"version":   PluginID.Version,
 			"remoteUrl": PluginID.RemoteUrl,
 		},
-		"description": "Test plugin",
+		"description": "Template plugin",
 		"authors": []interface{}{
 			"Mostafa Moradian <mostafa@gatewayd.io>",
 		},
 		"license":    "Apache-2.0",
-		"projectUrl": "https://github.com/gatewayd-io/gatewayd-plugin-test",
+		"projectUrl": "https://github.com/gatewayd-io/gatewayd-plugin-template",
 		// Compile-time configuration
 		"config": map[string]interface{}{
 			"metricsEnabled":          "true",
-			"metricsUnixDomainSocket": "/tmp/gatewayd-plugin-test.sock",
+			"metricsUnixDomainSocket": "/tmp/gatewayd-plugin-template.sock",
 			"metricsEndpoint":         "/metrics",
 		},
 		// "requires": []interface{}{

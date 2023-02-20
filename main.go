@@ -8,7 +8,7 @@ import (
 	"github.com/gatewayd-io/gatewayd-plugin-sdk/logging"
 	"github.com/gatewayd-io/gatewayd-plugin-sdk/metrics"
 	v1 "github.com/gatewayd-io/gatewayd-plugin-sdk/plugin/v1"
-	"github.com/gatewayd-io/gatewayd-plugin-test/plugin"
+	"github.com/gatewayd-io/gatewayd-plugin-template/plugin"
 	"github.com/hashicorp/go-hclog"
 	goplugin "github.com/hashicorp/go-plugin"
 )
@@ -25,7 +25,7 @@ func main() {
 		Color:      hclog.ColorOff,
 	})
 
-	pluginInstance := plugin.NewTestPlugin(plugin.Plugin{
+	pluginInstance := plugin.NewTemplatePlugin(plugin.Plugin{
 		Logger: logger,
 	})
 

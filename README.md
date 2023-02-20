@@ -1,3 +1,3 @@
-# gatewayd-plugin-test
+# gatewayd-plugin-template
 
-A test plugin for GatewayD
+Use this template to create your own plugin.

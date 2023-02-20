@@ -1,4 +1,4 @@
-module github.com/gatewayd-io/gatewayd-plugin-test
+module github.com/gatewayd-io/gatewayd-plugin-template
 
 go 1.18
 
