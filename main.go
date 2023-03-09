@@ -7,6 +7,7 @@ import (
 	sdkConfig "github.com/gatewayd-io/gatewayd-plugin-sdk/config"
 	"github.com/gatewayd-io/gatewayd-plugin-sdk/logging"
 	"github.com/gatewayd-io/gatewayd-plugin-sdk/metrics"
+	p "github.com/gatewayd-io/gatewayd-plugin-sdk/plugin"
 	v1 "github.com/gatewayd-io/gatewayd-plugin-sdk/plugin/v1"
 	"github.com/gatewayd-io/gatewayd-plugin-template/plugin"
 	"github.com/hashicorp/go-hclog"
@@ -46,7 +47,7 @@ func main() {
 		Plugins: v1.GetPluginSetMap(map[string]goplugin.Plugin{
 			"gateway-plugin-test": pluginInstance,
 		}),
-		GRPCServer: goplugin.DefaultGRPCServer,
+		GRPCServer: p.DefaultGRPCServer,
 		Logger:     logger,
 	})
 }
