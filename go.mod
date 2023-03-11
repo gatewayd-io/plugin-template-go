@@ -1,6 +1,6 @@
 module github.com/gatewayd-io/gatewayd-plugin-template
 
-go 1.18
+go 1.20
 
 require (
 	github.com/gatewayd-io/gatewayd-plugin-sdk v0.0.16
