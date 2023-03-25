@@ -103,7 +103,7 @@ var (
 	OnTrafficFromClient = promauto.NewCounter(prometheus.CounterOpts{
 		Namespace: metrics.Namespace,
 		Name:      "on_traffic_from_client_total",
-		Help:      "The total number of of calls to the onTrafficFromClient method",
+		Help:      "The total number of calls to the onTrafficFromClient method",
 	})
 	OnTrafficToServer = promauto.NewCounter(prometheus.CounterOpts{
 		Namespace: metrics.Namespace,
