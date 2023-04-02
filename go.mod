@@ -3,7 +3,7 @@ module github.com/gatewayd-io/gatewayd-plugin-template
 go 1.20
 
 require (
-	github.com/gatewayd-io/gatewayd-plugin-sdk v0.0.17
+	github.com/gatewayd-io/gatewayd-plugin-sdk v0.0.18
 	github.com/hashicorp/go-hclog v1.5.0
 	github.com/hashicorp/go-plugin v1.4.9
 	github.com/prometheus/client_golang v1.14.0
@@ -28,5 +28,5 @@ require (
 	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
-	google.golang.org/genproto v0.0.0-20230323212658-478b75c54725 // indirect
+	google.golang.org/genproto v0.0.0-20230331144136-dcfb400f0633 // indirect
 )
