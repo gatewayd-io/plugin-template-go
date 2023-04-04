@@ -4,18 +4,18 @@
 verificationPolicy: "passdown"
 # Possible values: "strict" (default) and "loose"
 compatibilityPolicy: "strict"
-# Possible values: "accept" (default) and "reject" 
+# Possible values: "accept" (default) and "reject"
 acceptancePolicy: "accept"
 metricsMergerPeriod: 5s
 healthCheckPeriod: 5s
 
 plugins:
   # Plugin name
-  - name: gatewayd-plugin-template
+  - name: plugin-template-go
     # whether to enable or disable the plugin on the next run
     enabled: True
     # path to the plugin's binary file
-    localPath: ../gatewayd-plugin-template/gatewayd-plugin-template
+    localPath: ../plugin-template-go/plugin-template-go
     # Pass cmdline args to the plugin
     args: ["--log-level", "info"]
     # Pass environment variables to the plugin

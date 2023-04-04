@@ -1,4 +1,4 @@
-module github.com/gatewayd-io/gatewayd-plugin-template
+module github.com/gatewayd-io/plugin-template-go
 
 go 1.20
 
