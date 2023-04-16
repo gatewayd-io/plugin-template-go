@@ -26,7 +26,7 @@ var (
 		"authors": []interface{}{
 			"Mostafa Moradian <mostafa@gatewayd.io>",
 		},
-		"license":    "AGPL-3.0",
+		"license":    "Apache 2.0",
 		"projectUrl": "https://github.com/gatewayd-io/plugin-template-go",
 		// Compile-time configuration
 		"config": map[string]interface{}{
