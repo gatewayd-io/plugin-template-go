@@ -1,13 +1,14 @@
 # Plugin configuration file for GatewayD
 
-# Possible values: "passdown" (default), "ignore", "abort" and "remove"
 verificationPolicy: "passdown"
-# Possible values: "strict" (default) and "loose"
 compatibilityPolicy: "strict"
-# Possible values: "accept" (default) and "reject"
 acceptancePolicy: "accept"
+terminationPolicy: "stop"
+enableMetricsMerger: True
 metricsMergerPeriod: 5s
 healthCheckPeriod: 5s
+reloadOnCrash: True
+timeout: 30s
 
 plugins:
   # Plugin name
