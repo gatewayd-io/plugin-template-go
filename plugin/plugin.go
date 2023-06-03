@@ -81,7 +81,7 @@ func (p *Plugin) OnConfigLoaded(
 	// 	"loggers.default.rsyslogNetwork": "tcp",
 	// 	"loggers.default.syslogPriority": "info",
 	// 	"loggers.default.timeFormat": "unix",
-	// 	"metrics.default.address": "localhost:2112",
+	// 	"metrics.default.address": "localhost:9090  ",
 	// 	"metrics.default.enabled": true,
 	// 	"metrics.default.path": "/metrics",
 	// 	"pools.default.size": 10,
