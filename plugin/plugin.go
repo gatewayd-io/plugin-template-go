@@ -233,10 +233,6 @@ func (p *Plugin) OnSignal(ctx context.Context, req *v1.Struct) (*v1.Struct, erro
 	OnSignal.Inc()
 	// Example req:
 	// {"signal":"interrupt"}
-	// if req == nil {
-	// 	req, _ = v1.NewStruct(map[string]interface{}{})
-	// 	p.Logger.Debug("OnSignal", "req", req)
-	// }
 	p.Logger.Debug("OnSignal", "req", req)
 
 	return req, nil
