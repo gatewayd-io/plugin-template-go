@@ -8,7 +8,6 @@ import (
 	"github.com/hashicorp/go-hclog"
 	goplugin "github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
-	"google.golang.org/protobuf/types/known/structpb"
 )
 
 type Plugin struct {
@@ -45,17 +44,16 @@ func NewTemplatePlugin(impl Plugin) *TemplatePlugin {
 // when the plugin is loaded. The plugin config is used to configure the
 // plugin.
 func (p *Plugin) GetPluginConfig(
-	ctx context.Context, _ *structpb.Struct) (*structpb.Struct, error) {
+	ctx context.Context, _ *v1.Struct) (*v1.Struct, error) {
 	GetPluginConfig.Inc()
 
-	return structpb.NewStruct(PluginConfig)
+	return v1.NewStruct(PluginConfig)
 }
 
 // OnConfigLoaded is called when the global config is loaded by GatewayD.
 // This can be used to modify the global config. Note that the plugin config
 // cannot be modified via plugins.
-func (p *Plugin) OnConfigLoaded(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnConfigLoaded(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnConfigLoaded.Inc()
 	// Example req:
 	// {
@@ -112,19 +110,18 @@ func (p *Plugin) OnConfigLoaded(
 	p.Logger.Debug("OnConfigLoaded", "req", req) // See what's in request from GatewayD.
 
 	if req.Fields == nil {
-		req.Fields = make(map[string]*structpb.Value)
+		req.Fields = make(map[string]*v1.Value)
 	}
 
-	req.Fields["loggers.default.level"] = structpb.NewStringValue("debug")
-	req.Fields["loggers.default.noColor"] = structpb.NewBoolValue(false)
+	req.Fields["loggers.default.level"] = v1.NewStringValue("debug")
+	req.Fields["loggers.default.noColor"] = v1.NewBoolValue(false)
 
 	return req, nil
 }
 
 // OnNewLogger is called when a new logger is created by GatewayD.
 // This is a notification and the plugin cannot modify the logger.
-func (p *Plugin) OnNewLogger(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnNewLogger(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnNewLogger.Inc()
 	// Example req:
 	// {
@@ -152,8 +149,7 @@ func (p *Plugin) OnNewLogger(
 
 // OnNewPool is called when a new pool is created by GatewayD.
 // This is a notification and the plugin cannot modify the pool.
-func (p *Plugin) OnNewPool(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnNewPool(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnNewPool.Inc()
 	// Example req:
 	// {"name":"default","size":10}
@@ -164,8 +160,7 @@ func (p *Plugin) OnNewPool(
 
 // OnNewClient is called when a new client is created by GatewayD.
 // This is a notification and the plugin cannot modify the client.
-func (p *Plugin) OnNewClient(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnNewClient(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnNewClient.Inc()
 	// Example req:
 	// {
@@ -186,8 +181,7 @@ func (p *Plugin) OnNewClient(
 
 // OnNewProxy is called when a new proxy is created by GatewayD.
 // This is a notification and the plugin cannot modify the proxy.
-func (p *Plugin) OnNewProxy(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnNewProxy(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnNewProxy.Inc()
 	// Example req:
 	// {
@@ -204,8 +198,7 @@ func (p *Plugin) OnNewProxy(
 
 // OnNewServer is called when a new server is created by GatewayD.
 // This is a notification and the plugin cannot modify the server.
-func (p *Plugin) OnNewServer(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnNewServer(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnNewServer.Inc()
 	// Example req:
 	// {
@@ -236,19 +229,21 @@ func (p *Plugin) OnNewServer(
 
 // OnSignal is called when a signal (for example, SIGKILL) is received by GatewayD.
 // This is a notification and the plugin cannot modify the signal.
-func (p *Plugin) OnSignal(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnSignal(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnSignal.Inc()
 	// Example req:
 	// {"signal":"interrupt"}
+	// if req == nil {
+	// 	req, _ = v1.NewStruct(map[string]interface{}{})
+	// 	p.Logger.Debug("OnSignal", "req", req)
+	// }
 	p.Logger.Debug("OnSignal", "req", req)
 
 	return req, nil
 }
 
 // OnRun is called when GatewayD is started.
-func (p *Plugin) OnRun(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnRun(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnRun.Inc()
 	// Example req:
 	// {"address":"0.0.0.0:15432"}
@@ -258,8 +253,7 @@ func (p *Plugin) OnRun(
 }
 
 // OnBooting is called when GatewayD is booting.
-func (p *Plugin) OnBooting(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnBooting(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnBooting.Inc()
 	// Example req:
 	// {"status":"1"}
@@ -269,8 +263,7 @@ func (p *Plugin) OnBooting(
 }
 
 // OnBooted is called when GatewayD is booted.
-func (p *Plugin) OnBooted(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnBooted(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnBooted.Inc()
 	// Example req:
 	// {"status":"0"}
@@ -280,8 +273,7 @@ func (p *Plugin) OnBooted(
 }
 
 // OnOpening is called when a new client connection is being opened.
-func (p *Plugin) OnOpening(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnOpening(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnOpening.Inc()
 	// Example req:
 	// {
@@ -296,8 +288,7 @@ func (p *Plugin) OnOpening(
 }
 
 // OnOpened is called when a new client connection is opened.
-func (p *Plugin) OnOpened(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnOpened(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnOpened.Inc()
 	// Example req:
 	// {
@@ -312,8 +303,7 @@ func (p *Plugin) OnOpened(
 }
 
 // OnClosing is called when a client connection is being closed.
-func (p *Plugin) OnClosing(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnClosing(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnClosing.Inc()
 	// Example req:
 	// {
@@ -329,8 +319,7 @@ func (p *Plugin) OnClosing(
 }
 
 // OnClosed is called when a client connection is closed.
-func (p *Plugin) OnClosed(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnClosed(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnClosed.Inc()
 	// Example req:
 	// {
@@ -347,8 +336,7 @@ func (p *Plugin) OnClosed(
 
 // OnTraffic is called when a request is being received by GatewayD from the client.
 // This is a notification and the plugin cannot modify the request at this point.
-func (p *Plugin) OnTraffic(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnTraffic(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnTraffic.Inc()
 	// Example req:
 	// {
@@ -363,8 +351,7 @@ func (p *Plugin) OnTraffic(
 }
 
 // OnShutdown is called when GatewayD is shutting down.
-func (p *Plugin) OnShutdown(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnShutdown(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnShutdown.Inc()
 	// Example req:
 	// {"connections":10}
@@ -374,8 +361,7 @@ func (p *Plugin) OnShutdown(
 }
 
 // OnTick is called when GatewayD is ticking (if enabled).
-func (p *Plugin) OnTick(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnTick(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnTick.Inc()
 	// Example req:
 	// {"connections":10}
@@ -387,8 +373,7 @@ func (p *Plugin) OnTick(
 // OnTrafficFromClient is called when a request is received by GatewayD from the client.
 // This can be used to modify the request or terminate the connection by returning an error
 // or a response.
-func (p *Plugin) OnTrafficFromClient(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnTrafficFromClient(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnTrafficFromClient.Inc()
 	// Example req:
 	// {
@@ -417,8 +402,7 @@ func (p *Plugin) OnTrafficFromClient(
 // OnTrafficToServer is called when a request is sent by GatewayD to the server.
 // This can be used to modify the request or terminate the connection by returning an error
 // or a response while also sending the request to the server.
-func (p *Plugin) OnTrafficToServer(
-	ctx context.Context, req *structpb.Struct) (*structpb.Struct, error) {
+func (p *Plugin) OnTrafficToServer(ctx context.Context, req *v1.Struct) (*v1.Struct, error) {
 	OnTrafficToServer.Inc()
 	// Example req:
 	// {
@@ -447,7 +431,7 @@ func (p *Plugin) OnTrafficToServer(
 // This can be used to modify the response or terminate the connection by returning an error
 // or a response.
 func (p *Plugin) OnTrafficFromServer(
-	ctx context.Context, resp *structpb.Struct) (*structpb.Struct, error) {
+	ctx context.Context, resp *v1.Struct) (*v1.Struct, error) {
 	OnTrafficFromServer.Inc()
 	// Example resp:
 	// {
@@ -481,7 +465,7 @@ func (p *Plugin) OnTrafficFromServer(
 // This can be used to modify the response or terminate the connection by returning an error
 // or a response.
 func (p *Plugin) OnTrafficToClient(
-	ctx context.Context, resp *structpb.Struct) (*structpb.Struct, error) {
+	ctx context.Context, resp *v1.Struct) (*v1.Struct, error) {
 	OnTrafficToClient.Inc()
 	// Example resp:
 	// {
