@@ -2,7 +2,6 @@ package plugin
 
 import (
 	"context"
-	"encoding/base64"
 
 	v1 "github.com/gatewayd-io/gatewayd-plugin-sdk/plugin/v1"
 	"github.com/hashicorp/go-hclog"
@@ -387,10 +386,8 @@ func (p *Plugin) OnTrafficFromClient(ctx context.Context, req *v1.Struct) (*v1.S
 	// }
 	p.Logger.Debug("OnTrafficFromClient", "req", req)
 
-	request := req.Fields["request"].GetStringValue()
-	if reqBytes, err := base64.StdEncoding.DecodeString(request); err == nil {
-		p.Logger.Debug("OnTrafficFromClient", "request", string(reqBytes))
-	}
+	request := req.Fields["request"].GetBytesValue()
+	p.Logger.Debug("OnTrafficFromClient", "request", string(request))
 
 	return req, nil
 }
@@ -415,10 +412,8 @@ func (p *Plugin) OnTrafficToServer(ctx context.Context, req *v1.Struct) (*v1.Str
 	// }
 	p.Logger.Debug("OnTrafficToServer", "req", req)
 
-	request := req.Fields["request"].GetStringValue()
-	if reqBytes, err := base64.StdEncoding.DecodeString(request); err == nil {
-		p.Logger.Debug("OnTrafficToServer", "request", string(reqBytes))
-	}
+	request := req.Fields["request"].GetBytesValue()
+	p.Logger.Debug("OnTrafficToServer", "request", string(request))
 
 	return req, nil
 }
@@ -449,10 +444,8 @@ func (p *Plugin) OnTrafficFromServer(
 	// }
 	p.Logger.Debug("OnTrafficFromServer", "resp", resp)
 
-	response := resp.Fields["response"].GetStringValue()
-	if respBytes, err := base64.StdEncoding.DecodeString(response); err == nil {
-		p.Logger.Debug("OnEgressTraffic", "response", string(respBytes))
-	}
+	response := resp.Fields["response"].GetBytesValue()
+	p.Logger.Debug("OnEgressTraffic", "response", string(response))
 
 	return resp, nil
 }
@@ -479,10 +472,8 @@ func (p *Plugin) OnTrafficToClient(
 	// }
 	p.Logger.Debug("OnTrafficToClient", "resp", resp)
 
-	response := resp.Fields["response"].GetStringValue()
-	if respBytes, err := base64.StdEncoding.DecodeString(response); err == nil {
-		p.Logger.Debug("OnEgressTraffic", "response", string(respBytes))
-	}
+	response := resp.Fields["response"].GetBytesValue()
+	p.Logger.Debug("OnEgressTraffic", "response", string(response))
 
 	return resp, nil
 }
