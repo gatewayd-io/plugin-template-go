@@ -45,7 +45,7 @@ func main() {
 			MagicCookieValue: sdkConfig.GetEnv("MAGIC_COOKIE_VALUE", ""),
 		},
 		Plugins: v1.GetPluginSetMap(map[string]goplugin.Plugin{
-			"gateway-plugin-test": pluginInstance,
+			plugin.PluginID.GetName(): pluginInstance,
 		}),
 		GRPCServer: p.DefaultGRPCServer,
 		Logger:     logger,

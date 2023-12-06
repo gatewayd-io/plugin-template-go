@@ -18,9 +18,9 @@ var (
 	// https://github.com/gatewayd-io/gatewayd-plugin-sdk/issues/3
 	PluginConfig = map[string]interface{}{
 		"id": map[string]interface{}{
-			"name":      PluginID.Name,
-			"version":   PluginID.Version,
-			"remoteUrl": PluginID.RemoteUrl,
+			"name":      PluginID.GetName(),
+			"version":   PluginID.GetVersion(),
+			"remoteUrl": PluginID.GetRemoteUrl(),
 		},
 		"description": "Template plugin",
 		"authors": []interface{}{
