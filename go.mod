@@ -7,6 +7,7 @@ require (
 	github.com/hashicorp/go-hclog v1.5.0
 	github.com/hashicorp/go-plugin v1.6.0
 	github.com/prometheus/client_golang v1.17.0
+	github.com/spf13/cast v1.6.0
 	google.golang.org/grpc v1.59.0
 )
 

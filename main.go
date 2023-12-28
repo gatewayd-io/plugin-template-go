@@ -12,6 +12,7 @@ import (
 	"github.com/gatewayd-io/plugin-template-go/plugin"
 	"github.com/hashicorp/go-hclog"
 	goplugin "github.com/hashicorp/go-plugin"
+	"github.com/spf13/cast"
 )
 
 func main() {
@@ -30,12 +31,11 @@ func main() {
 		Logger: logger,
 	})
 
-	var config *metrics.MetricsConfig
-	if cfg, ok := plugin.PluginConfig["config"].(map[string]interface{}); ok {
-		config = metrics.NewMetricsConfig(cfg)
-	}
-	if config != nil && config.Enabled {
-		go metrics.ExposeMetrics(config, logger)
+	if cfg := cast.ToStringMap(plugin.PluginConfig["config"]); cfg != nil {
+		metricsConfig := metrics.NewMetricsConfig(cfg)
+		if metricsConfig != nil && metricsConfig.Enabled {
+			go metrics.ExposeMetrics(metricsConfig, logger)
+		}
 	}
 
 	goplugin.Serve(&goplugin.ServeConfig{
