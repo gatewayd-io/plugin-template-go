@@ -17,6 +17,10 @@ plugins:
     enabled: True
     # path to the plugin's binary file
     localPath: ../plugin-template-go/plugin-template-go
+    # url for downloading the plugin, must be a GitHub URL
+    # The `plugin install` command will look for this url to download and install the plugin
+    # The version is either "latest" or a tagged version of the plugin, like "v0.2.9"
+    url: github.com/gatewayd-io/plugin-template-go@latest
     # Pass cmdline args to the plugin
     args: ["--log-level", "info"]
     # Pass environment variables to the plugin
