@@ -1,8 +1,7 @@
 tidy:
 	@go mod tidy
 
-build:
-	@tidy
+build: tidy
 	@go build -ldflags "-s -w"
 
 checksum:
