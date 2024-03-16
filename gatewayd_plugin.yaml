@@ -1,14 +1,14 @@
 # Plugin configuration file for GatewayD
 
 compatibilityPolicy: "strict"
-acceptancePolicy: "accept"
-terminationPolicy: "stop"
 enableMetricsMerger: True
 metricsMergerPeriod: 5s
 healthCheckPeriod: 5s
 reloadOnCrash: True
 timeout: 30s
-
+startTimeout: 1m
+policyTimeout: 30s
+policies: []
 plugins:
   # Plugin name
   - name: plugin-template-go
